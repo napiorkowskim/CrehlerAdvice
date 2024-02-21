@@ -1,0 +1,49 @@
+{
+  "crehler-advice": {
+    "header": "Porady By CREHLER",
+    "general": {
+      "mainMenuItemGeneral": "Porady By CREHLER",
+      "descriptionTextModule": "Definicja porad",
+      "placeholderSearchBar": "Wyszukaj porad",
+      "titleError": "Błąd",
+      "titleSuccess": "Success"
+    },
+    "list": {
+      "textHeadline": "Porady",
+      "contextMenuEdit": "Edytuj",
+      "buttonAdd": "Dodaj porade",
+      "buttonDelete": "Usuń",
+      "buttonCancel": "Anuluj",
+      "modalTitleDelete": "Usuń porade",
+      "textDeleteConfirm": "Jesteś pewny, że chcesz usunąć porade?",
+
+      "columnName": "Nazwa",
+      "columnCreatedAt": "Data utworzenia",
+      "columnUpdatedAt": "Data edycji",
+      "contentEmpty": "Nie ma tu jeszcze porad."
+    },
+    "detail": {
+      "textHeadline": "Porady",
+      "buttonCancel": "Anuluj",
+      "buttonSave": "Zapisz",
+      "placeholderNew": "Nowa porada...",
+
+      "inputCrossSellingProductStream": "Dynamiczna grupa produktów",
+      "inputCrossSellingProductStreamPlaceholder": "Wybierz dynamiczną grupę produktów",
+
+      "fieldNameLabel": "Nazwa",
+      "fieldNamePlaceholder": "Porada ...",
+
+      "descriptionLabel": "Zawartość porady",
+      "descriptionPlaceholder": "Porada...",
+
+      "notificationSaveSuccessTitle": "Success",
+      "notificationSaveErrorTitle": "Błąd",
+
+      "notificationSaveErrorMessage": "Wystąpił błąd podczas zapisywania porady \"{name}\".",
+      "notificationSaveSuccessMessage": "Porada \"{name}\" został zapisany poprawnie.",
+
+      "cardTitle": "Ustawienia"
+    }
+  }
+}

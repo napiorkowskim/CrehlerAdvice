@@ -1,0 +1,108 @@
+{% block crehler_advice_detail %}
+    <sw-page class="crehler-advice-detail">
+        {% block crehler_advice_detail_smart_bar_header %}
+            <template slot="smart-bar-header">
+                {% block crehler_advice_detail_smart_bar_header_title %}
+                    <h2>{{ $tc('crehler-advice.detail.textHeadline') }}</h2>
+                {% endblock %}
+            </template>
+        {% endblock %}
+
+        {% block crehler_advice_detail_smart_bar_actions %}
+            <template slot="smart-bar-actions">
+                {% block crehler_advice_detail_smart_bar_actions_cancel %}
+                    <sw-button :disabled="item.isLoading" :routerLink="{ name: 'crehler.advice.index' }">
+                        {{ $tc('crehler-advice.detail.buttonCancel') }}
+                    </sw-button>
+                {% endblock %}
+
+                {% block crehler_advice_detail_smart_bar_actions_save %}
+                    <sw-button-process
+                            class="crehler-advice-detail__save-action"
+                            :isLoading="isLoading"
+                            :processSuccess="isSaveSuccessful"
+                            :disabled="item.isLoading || !item.productStreamId || !item.name"
+                            variant="primary"
+                            {% if VUE3 %}
+                                @update:process-success="saveFinish"
+                            {% else %}
+                                @process-finish="saveFinish"
+                            {% endif %}
+                            @click.prevent="onSave">
+                        {{ $tc('crehler-advice.detail.buttonSave') }}
+                    </sw-button-process>
+                {% endblock %}
+            </template>
+        {% endblock %}
+
+        {% block crehler_advice_detail_language_switch %}
+            <template #language-switch>
+                <sw-language-switch
+                        :disabled="item.isNew()"
+                        :save-changes-function="saveOnLanguageChange"
+                        :abort-change-function="abortOnLanguageChange"
+                        @on-change="onChangeLanguage"
+                />
+            </template>
+        {% endblock %}
+
+        {% block crehler_advice_detail_content %}
+            <sw-card-view slot="content">
+                {% block crehler_advice_detail_content_card %}
+                    {% block crehler_advice_detail_content_language_info %}
+                        <sw-language-info :entity-description="entityName"/>
+                    {% endblock %}
+
+                    {% block crehler_advice_detail_content_card %}
+                        <sw-card :isLoading="isLoading" :title="$tc('crehler-advice.detail.cardTitle')">
+                            {% block crehler_advice_detail_content_card_product_stream_field %}
+                                <sw-entity-single-select
+                                        id="sw-field--crossSelling-product-group"
+                                        {% if VUE3 %}
+                                            v-model:value="item.productStreamId"
+                                        {% else %}
+                                            v-model="item.productStreamId"
+                                        {% endif %}
+                                        entity="product_stream"
+                                        class="sw-select-cross-selling__select-product-stream"
+                                        :label="$tc('crehler-advice.detail.inputCrossSellingProductStream')"
+                                        :placeholder="$tc('crehler-advice.detail.inputCrossSellingProductStreamPlaceholder')"
+                                        show-clearable-button
+                                        required
+                                />
+                            {% endblock %}
+
+                            {% block crehler_advice_detail_content_card_name %}
+                                <sw-text-field
+                                        {% if VUE3 %}
+                                            v-model:value="item.name"
+                                        {% else %}
+                                            v-model="item.name"
+                                        {% endif %}
+                                        class="crehler-advice-detail__item_name"
+                                        name="sw-field--advice-name"
+                                        :label="$tc('crehler-advice.detail.fieldNameLabel')"
+                                        :placeholder="placeholder(item, 'name', $tc('crehler-advice.detail.fieldNamePlaceholder'))"
+                                        required
+                                />
+                            {% endblock %}
+
+                            {% block crehler_advice_detail_content_card_description %}
+                                <sw-text-editor
+                                        {% if VUE3 %}
+                                            v-model:value="item.description"
+                                        {% else %}
+                                            v-model="item.description"
+                                        {% endif %}
+                                        type="textarea"
+                                        :label="$tc('crehler-advice.detail.descriptionLabel')"
+                                        :placeholder="placeholder(item, 'description',$tc('crehler-advice.detail.descriptionPlaceholder'))"
+                                />
+                            {% endblock %}
+                        </sw-card>
+                    {% endblock %}
+                {% endblock %}
+            </sw-card-view>
+        {% endblock %}
+    </sw-page>
+{% endblock %}

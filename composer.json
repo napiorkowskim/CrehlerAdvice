@@ -1,0 +1,41 @@
+{
+  "name": "crehler/advice",
+  "description": "Crehler - porady",
+  "type": "shopware-platform-plugin",
+  "license": "proprietary",
+  "version": "1.0.0",
+  "authors": [
+    {
+      "name": "Crehler Sp. z o. o.",
+      "email": "support@crehler.com",
+      "homepage": "https://crehler.com",
+      "role": "Owner"
+    }
+  ],
+  "support": {
+    "email": "support@crehler.com"
+  },
+  "autoload": {
+    "psr-4": {
+      "Crehler\\Advice\\": "src/"
+    }
+  },
+  "extra": {
+    "shopware-plugin-class": "Crehler\\Advice\\CrehlerAdvice",
+    "copyright": "(c) by Crehler Sp. z o. o.",
+    "label": {
+      "de-DE": "Crehler - porady",
+      "en-GB": "Crehler - porady",
+      "pl-PL": "Crehler - porady"
+    },
+    "plugin-icon": "src/Resources/config/plugin.png",
+    "manufacturerLink": {
+      "de-DE": "https://store.shopware.com/crehler.html",
+      "en-GB": "https://store.shopware.com/en/crehler.html",
+      "pl-PL": "https://store.shopware.com/en/crehler.html"
+    }
+  },
+  "require": {
+    "php": "^8.2"
+  }
+}

@@ -1,0 +1,3 @@
+advice-route:
+  resource: '../../Core/**/*Route.php'
+  type: annotation

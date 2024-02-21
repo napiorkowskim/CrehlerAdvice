@@ -1,0 +1,10 @@
+{% set adviceId = page.product.extensions.advice.id|default('') %}
+{% if adviceId %}
+    {% set cmsBlockadviceOptions = {
+        path: path('frontend.crehler.advice', { 'id': page.product.extensions.advice.id })
+    } %}
+    <div data-cms-block-advice="true"
+         data-cms-block-advice-plugin-options="{{ cmsBlockadviceOptions|default({})|json_encode|escape('html_attr') }}">
+        <div class="advice-content"></div>
+    </div>
+{% endif %}

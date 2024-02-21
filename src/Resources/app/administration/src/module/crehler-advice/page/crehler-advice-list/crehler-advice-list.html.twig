@@ -1,0 +1,117 @@
+{% block crehler_advice_list %}
+    <sw-page class="crehler-advice-list">
+        {% block crehler_advice_list_language_switch %}
+            <template #language-switch>
+                <sw-language-switch @on-change="onChangeLanguage" />
+            </template>>
+        {% endblock %}
+
+        {% block crehler_advice_list_search_bar %}
+            <template slot="search-bar">
+                <sw-search-bar
+                        initialSearchType="Nazwa"
+                        :placeholder="$tc('crehler-advice.general.placeholderSearchBar')"
+                        :initialSearch="term"
+                        @search="onSearch">
+                </sw-search-bar>
+            </template>
+        {% endblock %}
+
+        {% block crehler_advice_list_smart_bar_header %}
+            <template slot="smart-bar-header">
+                {% block crehler_advice_list_smart_bar_header_title %}
+                    <h2>
+                        {% block crehler_advice_list_smart_bar_header_title_text %}
+                            {{ $tc('crehler-advice.list.textHeadline') }}
+                        {% endblock %}
+
+                        {% block crehler_advice_list_smart_bar_header_amount %}
+                            <span v-if="!isLoading" class="sw-page__smart-bar-amount">
+                                ({{ total }})
+                            </span>
+                        {% endblock %}
+                    </h2>
+                {% endblock %}
+            </template>
+        {% endblock %}
+
+        {% block crehler_advice_list_smart_bar_actions %}
+            <template slot="smart-bar-actions">
+                {% block crehler_advice_list_smart_bar_actions_add %}
+                    <sw-button :routerLink="{ name: 'crehler.advice.create' }" variant="primary">
+                        {{ $tc('crehler-advice.list.buttonAdd') }}
+                    </sw-button>
+                {% endblock %}
+            </template>
+        {% endblock %}
+
+        {% block crehler_advice_list_cardview %}
+            <template slot="content">
+                <div class="crehler-advice-list__content">
+                    {% block crehler_advice_list_content %}
+                        <sw-entity-listing
+                                class="crehler-advice-list-grid"
+                                v-if="items && total > 0"
+                                :items="items"
+                                :repository="entityRepository"
+                                detailRoute="crehler.advice.detail"
+                                :showSeleciton="false"
+                                :sort-by="sortBy"
+                                :sort-direction="sortDirection"
+                                :natural-sorting="naturalSorting"
+                                @column-sort="onColumnSort"
+                                :isLoading="isLoading"
+                                :columns="columns">
+
+                            {% block crehler_advice_list_grid_created_at %}
+                                <template #column-createdAt="{ item }">
+                                    {{ dateFilter(item.createdAt) }}
+                                </template>
+                            {% endblock %}
+
+                            {% block crehler_advice_list_grid_updated_at %}
+                                <template #column-updatedAt="{ item }">
+                                    {{ dateFilter(item.updatedAt) }}
+                                </template>
+                            {% endblock %}
+
+                            <template #pagination>
+                                {% block sw_order_list_grid_pagination %}
+                                    <sw-pagination
+                                            :page="page"
+                                            :limit="limit"
+                                            :total="total"
+                                            :total-visible="7"
+                                            @page-change="onPageChange">
+                                    </sw-pagination>
+                                {% endblock %}
+                            </template>
+                        </sw-entity-listing>
+                    {% endblock %}
+
+                    {% block crehler_advice_list_empty_state %}
+                        <sw-empty-state
+                                v-if="!isLoading && total == 0"
+                                :title="$tc('crehler-advice.list.contentEmpty')"
+                                :subline="$tc('crehler-advice.general.descriptionTextModule')">
+                        </sw-empty-state>
+                    {% endblock %}
+                </div>
+            </template>
+        {% endblock %}
+
+        {% block crehler_advice_list_sidebar %}
+            <template #sidebar>
+                <sw-sidebar class="crehler-advice-list__sidebar">
+                    {% block crehler_advice_list_sidebar_item %}
+                        <sw-sidebar-item
+                                icon="regular-undo"
+                                :title="$tc('crehler-advice.list.titleSidebarItemRefresh')"
+                                @click="onRefresh">
+                        </sw-sidebar-item>
+                    {% endblock %}
+                </sw-sidebar>
+            </template>
+        {% endblock %}
+    </sw-page>
+{% endblock %}
