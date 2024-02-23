@@ -1,10 +1,8 @@
 const { Component } = Shopware;
 const utils = Shopware.Utils;
 
-import template from './crehler-advice-create.html.twig';
 
 Component.extend('crehler-advice-create', 'crehler-advice-detail', {
-    template,
 
     beforeRouteEnter(to, from, next) {
         if (to.name.includes('crehler.advice.create') && !to.params.id) {

@@ -12,5 +12,4 @@ class AdviceStruct extends Struct
         public readonly string $id,
     ) {
     }
-
 }

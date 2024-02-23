@@ -4,17 +4,23 @@ declare(strict_types=1);
 
 namespace Crehler\Advice\Core\Content\Advice;
 
+use Crehler\Advice\Core\Content\Advice\Aggregate\AdviceSalesChannelDefinition;
 use Crehler\Advice\Core\Content\Advice\Aggregate\AdviceTranslationDefinition;
 use Shopware\Core\Content\ProductStream\ProductStreamDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\FkField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\CascadeDelete;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\PrimaryKey;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\ReverseInherited;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\IdField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\ManyToManyAssociationField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\ManyToOneAssociationField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\TranslatedField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\TranslationsAssociationField;
 use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
+use Shopware\Core\System\SalesChannel\SalesChannelDefinition;
+use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 
 #[Autoconfigure(tags: [['name' => 'shopware.entity.definition', 'entity' => 'cregler_advice']])]
 class AdviceDefinition extends EntityDefinition
@@ -60,6 +66,14 @@ class AdviceDefinition extends EntityDefinition
                 'id',
                 false
             ),
+
+            (new ManyToManyAssociationField(
+                'salesChannels',
+                SalesChannelDefinition::class,
+                AdviceSalesChannelDefinition::class,
+                'crehler_advice_id',
+                'sales_channel_id'
+            ))->addFlags(new CascadeDelete())
         ]);
     }
 }

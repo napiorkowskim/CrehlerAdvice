@@ -32,5 +32,4 @@ class AdviceTranslationDefinition extends EntityTranslationDefinition
             (new LongTextField('description', 'description'))->addFlags(new AllowHtml()),
         ]);
     }
-
 }

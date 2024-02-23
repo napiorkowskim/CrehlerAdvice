@@ -12,7 +12,7 @@ abstract class AbstractAdviceRoute
     abstract public function getDecorated(): AbstractAdviceRoute;
     abstract public function searchAdvice(
         RequestDataBag $data,
-        SalesChannelContext $context
+        SalesChannelContext $salesChannelContext
     ): SearchAdviceResponse;
-    abstract public function getAdvice(string $id, SalesChannelContext $context): AdviceResponse;
+    abstract public function getAdvice(string $id, SalesChannelContext $salesChannelContext): AdviceResponse;
 }

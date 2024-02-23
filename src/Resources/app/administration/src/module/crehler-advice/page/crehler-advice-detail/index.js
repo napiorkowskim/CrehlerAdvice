@@ -1,4 +1,4 @@
-const { Component, Mixin, State } = Shopware;
+const { Component, Mixin, State, Data: { Criteria } } = Shopware;
 
 import template from './crehler-advice-detail.html.twig';
 
@@ -31,6 +31,13 @@ Component.register('crehler-advice-detail', {
             return this.placeholder(this.item, 'id');
         },
 
+        productTypeCriteria() {
+            const criteria = new Criteria();
+            criteria.addAssociation('salesChannels');
+
+            return criteria;
+        },
+
         entityName() {
             return this.placeholder(
                 this.item,
@@ -52,7 +59,9 @@ Component.register('crehler-advice-detail', {
 
         getEntity() {
             this.repository
-                .get(this.$route.params.id, Shopware.Context.api)
+                .get(this.$route.params.id,
+                    Shopware.Context.api,
+                    this.productTypeCriteria)
                 .then((entity) => {
                     this.item = entity;
                 });

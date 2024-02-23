@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 
 #[Route(defaults: ['_routeScope' => ['storefront']])]
-class AdviceController  extends StorefrontController
+class AdviceController extends StorefrontController
 {
     public function __construct(
         #[Autowire(service: AdviceRoute::class)] public readonly AbstractAdviceRoute $route

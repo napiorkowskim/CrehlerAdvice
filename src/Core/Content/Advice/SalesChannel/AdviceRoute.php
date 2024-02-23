@@ -10,6 +10,8 @@ use Shopware\Core\Framework\DataAbstractionLayer\Cache\EntityCacheKeyGenerator;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsAnyFilter;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\MultiFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\IdSearchResult;
 use Shopware\Core\Framework\Plugin\Exception\DecorationPatternException;
 use Shopware\Core\Framework\Validation\DataBag\RequestDataBag;
@@ -38,18 +40,25 @@ class AdviceRoute extends AbstractAdviceRoute
         name: 'store-api.crehler.find-advice',
         methods: ['POST']
     )]
-    public function searchAdvice(RequestDataBag $data, SalesChannelContext $context): SearchAdviceResponse
+    public function searchAdvice(RequestDataBag $data, SalesChannelContext $salesChannelContext): SearchAdviceResponse
     {
         $streamIds = $data->get('streamIds');
         if (empty($streamIds)) {
-            return new SearchAdviceResponse(new IdSearchResult(0, [], new Criteria(), $context->getContext()));
+            return new SearchAdviceResponse(new IdSearchResult(0, [], new Criteria(), $salesChannelContext->getContext()));
         }
 
         $criteria = (new Criteria())
-            ->addFilter(new EqualsAnyFilter('productStreamId', $streamIds))
+            ->addAssociations(['salesChannels'])
+            ->addFilter(new MultiFilter(
+                MultiFilter::CONNECTION_AND,
+                [
+                    new EqualsFilter('salesChannels.id', $salesChannelContext->getSalesChannelId()),
+                    new EqualsAnyFilter('productStreamId', $streamIds)
+                ]
+            ))
             ->setLimit(1);
 
-        $adviceSearchResult = $this->adviceRepository->searchIds($criteria, $context->getContext());
+        $adviceSearchResult = $this->adviceRepository->searchIds($criteria, $salesChannelContext->getContext());
 
         return new SearchAdviceResponse($adviceSearchResult);
     }
@@ -95,5 +104,4 @@ class AdviceRoute extends AbstractAdviceRoute
     {
         return 'crehler-advice-' . $id;
     }
-
 }

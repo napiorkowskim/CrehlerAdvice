@@ -6,6 +6,7 @@ namespace Crehler\Advice\Core\Content\Advice;
 
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityIdTrait;
+use Shopware\Core\System\SalesChannel\SalesChannelCollection;
 
 class AdviceEntity extends Entity
 {
@@ -15,6 +16,7 @@ class AdviceEntity extends Entity
     protected bool $active;
     protected string $name;
     protected string $description;
+    protected ?SalesChannelCollection $salesChannels = null;
 
     public function getProductStreamId(): string
     {
@@ -56,5 +58,13 @@ class AdviceEntity extends Entity
         $this->description = $description;
     }
 
+    public function getSalesChannels(): ?SalesChannelCollection
+    {
+        return $this->salesChannels;
+    }
 
+    public function setSalesChannels(?SalesChannelCollection $salesChannels): void
+    {
+        $this->salesChannels = $salesChannels;
+    }
 }

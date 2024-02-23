@@ -11,5 +11,4 @@ class AdviceResponse extends StoreApiResponse
     {
         return $this->object;
     }
-
 }

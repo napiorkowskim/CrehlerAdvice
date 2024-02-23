@@ -99,6 +99,20 @@
                                         :placeholder="placeholder(item, 'description',$tc('crehler-advice.detail.descriptionPlaceholder'))"
                                 />
                             {% endblock %}
+
+                            {% block crehler_size_chart_detail_content_card_sales_channels %}
+                                <sw-entity-multi-select
+                                        {% if VUE3 %}
+                                            v-model:entityCollection="item.salesChannels"
+                                        {% else %}
+                                            v-model="item.salesChannels"
+                                        {% endif %}
+                                        required
+                                        entity-name="sales_channel"
+                                        :label="$tc('crehler-product-type.detail.fieldSalesChannelsLabel')"
+                                        :placeholder="$tc('crehler-product-type.detail.fieldSalesChannelsPlaceholder')"
+                                />
+                            {% endblock %}
                         </sw-card>
                     {% endblock %}
                 {% endblock %}

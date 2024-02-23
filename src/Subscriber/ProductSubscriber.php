@@ -30,7 +30,6 @@ class ProductSubscriber implements EventSubscriberInterface
 
     public function onProductPage(ProductPageLoadedEvent $event): void
     {
-
         $product = $event->getPage()->getProduct();
 
         $dataBag = new RequestDataBag();
@@ -40,6 +39,7 @@ class ProductSubscriber implements EventSubscriberInterface
         if ($response->getAdvice()->firstId() === null) {
             return;
         }
+
 
         $product->addExtension(
             AdviceStruct::NAME,

@@ -41,8 +41,20 @@ CREATE TABLE IF NOT EXISTS `crehler_advice_translation` (
         REFERENCES `language` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 SQL;
+        $adviceRelationQuery = <<<SQL
+CREATE TABLE IF NOT EXISTS `crehler_advice_sales_channel` (
+    `crehler_advice_id` BINARY(16) NOT NULL,
+    `sales_channel_id` BINARY(16) NOT NULL,
+    PRIMARY KEY (`crehler_advice_id`, `sales_channel_id`),
+    CONSTRAINT `fk.crehler_advice_sales_channel.crehler_advice_id` FOREIGN KEY (`crehler_advice_id`)
+        REFERENCES `crehler_advice` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk.crehler_advice_sales_channel.sales_channel_id` FOREIGN KEY (`sales_channel_id`)
+        REFERENCES `sales_channel` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+SQL;
 
         $connection->executeStatement($adviceQuery);
+        $connection->executeStatement($adviceRelationQuery);
         $connection->executeStatement($adviceTranslationQuery);
     }
 
